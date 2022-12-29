@@ -1,0 +1,17 @@
+version: '3.3'
+
+services:
+  app:
+    container_name: 'news_brotomotifapp'
+    build: .
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    ports:
+      - 5001:5001
+    stdin_open: true
+    environment:
+      - PORT=5001
+    command: npm start
+volumes:
+  node_modules:
