@@ -65,13 +65,4 @@ spec:
   targetCPUUtilizationPercentage: 100
 
 
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: production
-  namespace: production
-  annotations:
-    kubernetes.io/ingress.global-static-ip-name: brotomotif
-    kubernetes.io/ingress.allow-http: "false"
-    networking.gke.io/managed-certificates: brotomotif
+
