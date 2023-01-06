@@ -20,7 +20,6 @@ spec:
     targetPort: 80
   type: NodePort
 
-
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -36,13 +35,13 @@ spec:
   template: #Template for container
     metadata:
       labels:
-        app: brotomotif
+        app: wooless
     spec:
       containers:
       - name: brotomotif
-        image:  asia.gcr.io/$PROJECT_ID/production/brotomotif:$SHORT_SHA
+        image:  asia.gcr.io/$PROJECT_ID/production/wooless:$SHORT_SHA
         imagePullPolicy: Always
-        ports: 
+        ports:
         - containerPort: 80
           name: brotomotif
         resources:
@@ -56,7 +55,7 @@ metadata:
   name: brotomotif
   namespace: production
 spec:
-  maxReplicas: 10
+  maxReplicas: 25
   minReplicas: 3
   scaleTargetRef:
     apiVersion: apps/v1
