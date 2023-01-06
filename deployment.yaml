@@ -64,21 +64,19 @@ spec:
     name: brotomotif
   targetCPUUtilizationPercentage: 100
 
----
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
+
+apiVersion: v1
+kind: Service
 metadata:
-  name: brotomotif
-  annotations:
-    kubernetes.io/ingress.class: gce
+  name: brotomotif-external
 spec:
-  rules:
-  - http:
-      paths:
-      - path: /*
-        backend:
-          serviceName: brotomotif
-          servicePort: 80
+  type: LoadBalancer
+  selector:
+    app: brotomotif
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
 
 
 
