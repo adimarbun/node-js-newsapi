@@ -21,8 +21,8 @@ steps:
   args:
   - run
   - --filename=deployment.yaml
-  - --cluster=my-first-cluster-1
-  - --location=us-central1-c
+  - --cluster=brotomotif-production
+  - --location=asia-southeast2-a
   timeout: 900s
 
 # Global Timeout

@@ -15,10 +15,24 @@ spec:
   selector:
     app: brotomotif
   ports:
-  - port: 80
+  - port: 3000
     name: http
-    targetPort: 80
+    targetPort: 3000
   type: NodePort
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: brotomotif-external
+spec:
+  type: LoadBalancer
+  selector:
+    app: brotomotif
+  ports:
+  - name: http
+    port: 3000
+    targetPort: 3000
 
 ---
 apiVersion: apps/v1
@@ -42,45 +56,15 @@ spec:
         image:  asia.gcr.io/$PROJECT_ID/production/brotomotif:$SHORT_SHA
         imagePullPolicy: Always
         ports:
-        - containerPort: 80
+        - containerPort: 3000
           name: brotomotif
         resources:
           requests:
             cpu: 50m
 
----
-apiVersion: autoscaling/v1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: brotomotif
-  namespace: production
-spec:
-  maxReplicas: 25
-  minReplicas: 3
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: brotomotif
-  targetCPUUtilizationPercentage: 100
 
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: brotomotif
-  annotations:
-    kubernetes.io/ingress.global-static-ip-name: brotomotif
-spec:
-  rules:
-  - http:
-      paths:
-      - path: /*
-        pathType: Prefix
-        backend:
-          service:
-            name: brotomotif
-            port:
-              number: 80
+
+
 
 
 
