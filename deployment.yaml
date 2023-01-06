@@ -1,71 +1,39 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: production
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: brotomotif
-  namespace: production
-  labels:
-    app: brotomotif
-spec:
-  selector:
-    app: brotomotif
-  ports:
-  - port: 3000
-    name: http
-    targetPort: 3000
-  type: NodePort
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: brotomotif-external
-  namespace: production
-spec:
-  type: LoadBalancer
-  selector:
-    app: brotomotif
-  ports:
-  - name: http
-    port: 3000
-    targetPort: 3000
-
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: brotomotif
-  namespace: production
+  name: node
+  labels:
+    name: node
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: brotomotif
-  strategy:
-    type: RollingUpdate
-  template: #Template for container
+      app: node
+  template:
     metadata:
       labels:
-        app: brotomotif
+        app: node
     spec:
       containers:
-      - name: brotomotif
-        image:  asia.gcr.io/$PROJECT_ID/production/brotomotif:$SHORT_SHA
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 3000
-          name: brotomotif
-        resources:
-          requests:
-            cpu: 50m
-
-
-
-
-
-
-
+      - name: node
+        image: asia.gcr.io/$PROJECT_ID/production/brotomotif:$SHORT_SHA
+        env:
+        - name: NODE_ENV
+          value: "development"
+        - name: PORT
+          value: "3000"
+      restartPolicy: Always
+      
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node
+  labels:
+    service: node
+spec:
+  selector:
+    app: node
+  type: LoadBalancer
+  ports:
+    - port: 3000
