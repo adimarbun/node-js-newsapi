@@ -15,7 +15,7 @@ app.use('/otomotif',otomotifRoutes);
 app.use('/news',newsRoutes);
 
 app.get('/',(req,res) =>{
-    res.send("Hello Welcome to news server update");
+    res.send("Hello Welcome to news server.");
 })
 
 app.listen(PORT,() => console.log(`Server running in port`,PORT));
