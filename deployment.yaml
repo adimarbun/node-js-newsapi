@@ -9,6 +9,8 @@ kind: Service
 metadata:
   name: brotomotif
   namespace: production
+  labels:
+    app: brotomotif
 spec:
   selector:
     app: brotomotif
@@ -33,11 +35,11 @@ spec:
   template: #Template for container
     metadata:
       labels:
-        app: wooless
+        app: brotomotif
     spec:
       containers:
       - name: brotomotif
-        image:  asia.gcr.io/$PROJECT_ID/production/wooless:$SHORT_SHA
+        image:  asia.gcr.io/$PROJECT_ID/production/brotomotif:$SHORT_SHA
         imagePullPolicy: Always
         ports:
         - containerPort: 80
@@ -61,7 +63,7 @@ spec:
     name: brotomotif
   targetCPUUtilizationPercentage: 100
 
-
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
