@@ -63,19 +63,22 @@ spec:
     kind: Deployment
     name: brotomotif
   targetCPUUtilizationPercentage: 100
-  
+
 ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: brotomotif
-  namespace: production
+  annotations:
+    kubernetes.io/ingress.class: gce
 spec:
   rules:
   - http:
       paths:
       - path: /*
         backend:
+          serviceName: brotomotif
+          servicePort: 80
 
 
 
