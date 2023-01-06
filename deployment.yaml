@@ -9,8 +9,6 @@ kind: Service
 metadata:
   name: brotomotif
   namespace: production
-  labels:
-    app: brotomotif
 spec:
   selector:
     app: brotomotif
