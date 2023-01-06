@@ -15,9 +15,9 @@ spec:
   selector:
     app: brotomotif
   ports:
-  - port: 3000
+  - port: 80
     name: http
-    targetPort: 3000
+    targetPort: 80
   type: NodePort
 
 
@@ -43,7 +43,7 @@ spec:
         image:  asia.gcr.io/$PROJECT_ID/production/brotomotif:$SHORT_SHA
         imagePullPolicy: Always
         ports: 
-        - containerPort: 3000
+        - containerPort: 80
           name: brotomotif
         resources:
           requests:
